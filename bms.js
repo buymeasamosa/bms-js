@@ -39,8 +39,9 @@ function injectHTML() {
                 <div id="bms_qrcodemain"></div>
                 <span id="bms_userupiid"></span>
             </div>
-            <span id="bms_inst">SCAN TO PAY WITH ANY UPI APP </span>
+            <div id="bms_useramount"></div>
             <div id="bms_message"></div>
+            <span id="bms_inst">SCAN TO PAY WITH ANY UPI APP </span>
             <div id="bms_logocont">
                 <img src="https://buymeasamosa.arycodes.in/assets/images/logo_512.png" alt="">
                 <span id="bms_logotxt">Buy Me A Samosa</span>
@@ -92,10 +93,17 @@ function bms_data_inj() {
     bms_upiid = bms_scriptElement.getAttribute('data-bms_userupi');
     bms_user_name = bms_scriptElement.getAttribute('data-bms_user_name');
     bms_usertmsg = bms_scriptElement.getAttribute('data-bms_usertmsq');
-    bms_upiidqrcont = `upi://pay?pa=${bms_upiid}&pn=${bms_user_name}&tn=${bms_usertmsg}`
+    bms_useramt = bms_scriptElement.getAttribute('data-bms_user_amount') || "" ;
+    console.log(bms_useramt)
+    bms_upiidqrcont = `upi://pay?pa=${bms_upiid}&pn=${bms_user_name}&am=${bms_useramt}&cu=INR`
 
     bms_qr_maker(bms_upiidqrcont)
     document.getElementById("bms_userupiid").innerHTML = bms_upiid
     document.getElementById("bms_usernamecontainer").innerHTML = bms_user_name
     document.getElementById("bms_message").innerHTML = bms_usertmsg
+    
+    if (bms_useramt){
+        document.getElementById("bms_useramount").innerHTML = `₹ ${bms_useramt}`
+    }
+
 }
